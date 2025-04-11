@@ -110,12 +110,10 @@
 
     function copyToClipboard() {
       if (!rewrittenText.value.trim()) {
-        alert('Nothing to copy.');
         return;
       }
       rewrittenText.select();
       document.execCommand("copy");
-      alert("Rewritten content copied to clipboard!");
     }
 
     function clearText() {
