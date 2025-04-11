@@ -6,31 +6,121 @@
   <title>Article Rewriter | All-in-One Tools</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .rewriter-container {
+      max-width: 900px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .rewriter-container textarea {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      margin-bottom: 1rem;
+      resize: vertical;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .rewriter-container .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-start;
+      margin-bottom: 1rem;
+    }
+    .rewriter-container button {
+      padding: 10px 20px;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .rewriter-container button:hover {
+      background: #0056b3;
+    }
+    .counter {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Header -->
-  <!-- Header will be loaded here -->
-<div id="header-placeholder"></div>
+  <div id="header-placeholder"></div>
 
-  <!-- Main -->
+  <!-- Main Section -->
   <section class="hero">
-    <!--h2>Free Online Tools for Everyone</h2-->
     <div class="main-container">
       <h3>Article Rewriter</h3>
       <p>Article rewriter or article spinner helps you rewrite articles or any type of content.</p>
     </div>
-    <div class="main-container">
-      <h3>Article Rewriter</h3>
-      <p>Article rewriter or article spinner helps you rewrite articles or any type of content.</p>
+
+    <div class="rewriter-container">
+      <textarea id="originalText" placeholder="Enter your content here..."></textarea>
+      <div class="counter" id="counter">Words: 0 | Characters: 0</div>
+      <div class="actions">
+        <button onclick="rewriteText()"><i class="fas fa-sync-alt"></i> Rewrite</button>
+        <button onclick="copyToClipboard()"><i class="fas fa-copy"></i> Copy</button>
+        <button onclick="clearText()"><i class="fas fa-times"></i> Clear</button>
+      </div>
+      <textarea id="rewrittenText" placeholder="Rewritten content will appear here..." readonly></textarea>
     </div>
   </section>
 
   <!-- Footer -->
-  <!-- Footer will be loaded here -->
-<div id="footer-placeholder"></div>
+  <div id="footer-placeholder"></div>
 
-  <!-- JavaScript -->
+  <!-- Scripts -->
   <script src="script.js"></script>
+  <script>
+    const originalText = document.getElementById('originalText');
+    const rewrittenText = document.getElementById('rewrittenText');
+    const counter = document.getElementById('counter');
+
+    originalText.addEventListener('input', () => {
+      const text = originalText.value;
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      const chars = text.length;
+      counter.textContent = `Words: ${words} | Characters: ${chars}`;
+    });
+
+    function rewriteText() {
+      const input = originalText.value.trim();
+      if (!input) {
+        alert('Please enter some content to rewrite.');
+        return;
+      }
+
+      // Basic simulated rewrite (replace with real API if needed)
+      const rewritten = input
+        .replace(/\bimportant\b/gi, "crucial")
+        .replace(/\bhelp\b/gi, "assist")
+        .replace(/\bstart\b/gi, "begin")
+        .replace(/\bfast\b/gi, "quick");
+
+      rewrittenText.value = rewritten || "No changes made.";
+    }
+
+    function copyToClipboard() {
+      if (!rewrittenText.value.trim()) {
+        alert('Nothing to copy.');
+        return;
+      }
+      rewrittenText.select();
+      document.execCommand("copy");
+      alert("Rewritten content copied to clipboard!");
+    }
+
+    function clearText() {
+      originalText.value = "";
+      rewrittenText.value = "";
+      counter.textContent = "Words: 0 | Characters: 0";
+    }
+  </script>
 </body>
 </html>
