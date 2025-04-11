@@ -19,7 +19,7 @@
       margin-bottom: 1rem;
       resize: vertical;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: bold;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       border-radius: 10px;
       border: 1px solid #ccc;
@@ -78,7 +78,6 @@
   <div id="footer-placeholder"></div>
 
   <!-- Scripts -->
-  <script src="script.js"></script>
   <script>
     const originalText = document.getElementById('originalText');
     const rewrittenText = document.getElementById('rewrittenText');
@@ -91,27 +90,43 @@
       counter.textContent = `Words: ${words} | Characters: ${chars}`;
     });
 
-    function rewriteText() {
+    async function rewriteText() {
       const input = originalText.value.trim();
-      if (!input) {
-        alert('Please enter some content to rewrite.');
-        return;
+      if (!input) return;
+
+      rewrittenText.value = "Rewriting... Please wait.";
+
+      try {
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer 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", // Replace this with your actual API key
+            "HTTP-Referer": "https://your-site.com", // Optional
+            "X-Title": "All-in-One Tools", // Optional
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "deepseek/deepseek-r1:free",
+            messages: [
+              {
+                role: "user",
+                content: `Rewrite the following content in a natural, human-like and professional tone:\n\n${input}`
+              }
+            ]
+          })
+        });
+
+        const data = await response.json();
+        const rewritten = data.choices?.[0]?.message?.content || "Could not rewrite the content.";
+        rewrittenText.value = rewritten.trim();
+      } catch (error) {
+        rewrittenText.value = "Error rewriting. Please try again later.";
+        console.error(error);
       }
-
-      // Basic simulated rewrite (replace with real API if needed)
-      const rewritten = input
-        .replace(/\bimportant\b/gi, "crucial")
-        .replace(/\bhelp\b/gi, "assist")
-        .replace(/\bstart\b/gi, "begin")
-        .replace(/\bfast\b/gi, "quick");
-
-      rewrittenText.value = rewritten || "No changes made.";
     }
 
     function copyToClipboard() {
-      if (!rewrittenText.value.trim()) {
-        return;
-      }
+      if (!rewrittenText.value.trim()) return;
       rewrittenText.select();
       document.execCommand("copy");
     }
