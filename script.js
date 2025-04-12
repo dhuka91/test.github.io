@@ -1,32 +1,16 @@
-(function () {
-  // Get base path to root depending on page depth
-  const basePath = window.location.pathname
-    .replace(/[^\/]+\.html$/, '')  // remove filename
-    .replace(/\/+$/, '')           // remove trailing slashes
-    .split('/').filter(Boolean).map(() => '..').join('/') || '.';
+fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+    })
+    .catch(error => console.error('Error loading header:', error));
 
-  function loadHTML(id, file) {
-    const filePath = `${basePath}/${file}`;
-    fetch(filePath)
-      .then(res => {
-        if (!res.ok) throw new Error(`${file} not found`);
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById(id).innerHTML = html;
-      })
-      .catch(err => {
-        console.error(err.message);
-        document.getElementById(id).innerHTML =
-          `<div style="color:red;text-align:center;">${file} not found (404)</div>`;
-      });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    loadHTML('header-placeholder', 'header.html');
-    loadHTML('footer-placeholder', 'footer.html');
-  });
-})();
+fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
+    })
+    .catch(error => console.error('Error loading footer:', error));
 
 
 function setTheme(theme) {
