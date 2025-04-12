@@ -37,12 +37,10 @@
   <!-- Dynamic script loader -->
   <script>
     const depth = window.location.pathname.split('/').length - 2;
-    const basePath = '../'.repeat(depth);
     const script = document.createElement('script');
-    script.src = basePath + 'script.js';
+    script.src = '../'.repeat(depth) + 'script.js';
     document.body.appendChild(script);
   </script>
-
   <script src="rewriter.js"></script>
 </body>
 </html>
