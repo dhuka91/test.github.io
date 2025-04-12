@@ -1,16 +1,25 @@
-fetch('header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-    })
-    .catch(error => console.error('Error loading header:', error));
+function getBasePath() {
+  const depth = window.location.pathname.split('/').length - 2;
+  return '../'.repeat(depth);
+}
 
-fetch('footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    })
-    .catch(error => console.error('Error loading footer:', error));
+const basePath = getBasePath();
+
+fetch(`${basePath}header.html`)
+  .then(response => response.text())
+  .then(data => {
+    const header = document.getElementById('header-placeholder');
+    if (header) header.innerHTML = data;
+  })
+  .catch(error => console.error('Error loading header:', error));
+
+fetch(`${basePath}footer.html`)
+  .then(response => response.text())
+  .then(data => {
+    const footer = document.getElementById('footer-placeholder');
+    if (footer) footer.innerHTML = data;
+  })
+  .catch(error => console.error('Error loading footer:', error));
 
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
