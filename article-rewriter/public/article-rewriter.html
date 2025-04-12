@@ -11,32 +11,40 @@
 <body>
 
   <!-- Header -->
-  <div id="header-placeholder"></div>
-  <script src="../../script.js"></script>
+<div id="header-placeholder"></div>
 
-  <!-- Main Section -->
-  <section class="hero">
-    <div class="main-container">
-      <h3>Article Rewriter</h3>
-      <p>Article rewriter or article spinner helps you rewrite articles or any type of content.</p>
+<!-- Main Section -->
+<section class="hero">
+  <div class="main-container">
+    <h3>Article Rewriter</h3>
+    <p>Article rewriter or article spinner helps you rewrite articles or any type of content.</p>
+  </div>
+
+  <div class="rewriter-container">
+    <textarea id="originalText" placeholder="Enter your content here..."></textarea>
+    <div class="counter" id="counter">Words: 0 | Characters: 0</div>
+    <div class="actions">
+      <button id="rewriteBtn"><i class="fas fa-sync-alt"></i> Rewrite</button>
+      <button id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
+      <button id="clearBtn"><i class="fas fa-times"></i> Clear</button>
     </div>
+    <textarea id="rewrittenText" placeholder="Rewritten content will appear here..." readonly></textarea>
+  </div>
+</section>
 
-    <div class="rewriter-container">
-      <textarea id="originalText" placeholder="Enter your content here..."></textarea>
-      <div class="counter" id="counter">Words: 0 | Characters: 0</div>
-      <div class="actions">
-        <button id="rewriteBtn"><i class="fas fa-sync-alt"></i> Rewrite</button>
-        <button id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
-        <button id="clearBtn"><i class="fas fa-times"></i> Clear</button>
-      </div>
-      <textarea id="rewrittenText" placeholder="Rewritten content will appear here..." readonly></textarea>
-    </div>
-  </section>
+<!-- Footer -->
+<div id="footer-placeholder"></div>
 
-  <!-- Footer -->
-  <div id="footer-placeholder"></div>
-  <script src="../../script.js"></script>
+<!-- Dynamically load script.js from correct path -->
+<script>
+  const depth = window.location.pathname.split('/').length - 2;
+  const jsPath = '../'.repeat(depth) + 'script.js';
+  const script = document.createElement('script');
+  script.src = jsPath;
+  document.body.appendChild(script);
+</script>
 
-  <script src="rewriter.js"></script>
+<!-- Your page-specific JS -->
+<script src="rewriter.js"></script>
 </body>
 </html>
