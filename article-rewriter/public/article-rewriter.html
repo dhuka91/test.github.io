@@ -36,13 +36,7 @@
 <div id="footer-placeholder"></div>
 
 <!-- Dynamically load script.js from correct path -->
-<script>
-  const depth = window.location.pathname.split('/').length - 2;
-  const jsPath = '../'.repeat(depth) + 'script.js';
-  const script = document.createElement('script');
-  script.src = jsPath;
-  document.body.appendChild(script);
-</script>
+<script src="../../../script.js"></script>
 
 <!-- Your page-specific JS -->
 <script src="rewriter.js"></script>
