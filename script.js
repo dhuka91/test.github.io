@@ -1,25 +1,27 @@
-function getBasePath() {
-  const depth = window.location.pathname.split('/').length - 2;
-  return '../'.repeat(depth);
+// script.js
+
+// Helper to load external HTML into placeholders
+function loadHTML(id, file) {
+  fetch(file)
+    .then(response => {
+      if (!response.ok) throw new Error(`Failed to load ${file}`);
+      return response.text();
+    })
+    .then(data => {
+      document.getElementById(id).innerHTML = data;
+    })
+    .catch(err => {
+      console.error(err.message);
+    });
 }
 
-const basePath = getBasePath();
+// Determine depth
+const depth = window.location.pathname.split('/').length - 2;
+const basePath = '../'.repeat(depth);
 
-fetch(`${basePath}header.html`)
-  .then(response => response.text())
-  .then(data => {
-    const header = document.getElementById('header-placeholder');
-    if (header) header.innerHTML = data;
-  })
-  .catch(error => console.error('Error loading header:', error));
-
-fetch(`${basePath}footer.html`)
-  .then(response => response.text())
-  .then(data => {
-    const footer = document.getElementById('footer-placeholder');
-    if (footer) footer.innerHTML = data;
-  })
-  .catch(error => console.error('Error loading footer:', error));
+// Load shared header and footer
+loadHTML('header-placeholder', basePath + 'header.html');
+loadHTML('footer-placeholder', basePath + 'footer.html');
 
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
