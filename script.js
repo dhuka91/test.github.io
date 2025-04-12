@@ -1,5 +1,6 @@
 (function () {
-  const depth = window.location.pathname.split('/').length - 2;
+  // Detect folder depth
+  const depth = location.pathname.replace(/\/$/, "").split('/').length - 2;
   const basePath = '../'.repeat(depth);
 
   function loadHTML(id, fileName) {
@@ -13,19 +14,17 @@
         document.getElementById(id).innerHTML = data;
       })
       .catch(error => {
-        console.error(`Error loading ${fileName}:`, error);
-        document.getElementById(id).innerHTML = `
-          <div style="color: red; text-align: center; padding: 1rem;">
-            ${fileName} not found (404)
-          </div>`;
+        console.error(error);
+        document.getElementById(id).innerHTML = `<div style="text-align:center;color:red;">${fileName} not found (404)</div>`;
       });
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     loadHTML('header-placeholder', 'header.html');
     loadHTML('footer-placeholder', 'footer.html');
   });
 })();
+
 
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
