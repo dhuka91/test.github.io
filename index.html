@@ -53,8 +53,17 @@
   <!-- Footer -->
   <!-- Footer will be loaded here -->
 <div id="footer-placeholder"></div>
+  
+  <!-- Dynamic script loader -->
+  <script>
+    const depth = window.location.pathname.split('/').length - 2;
+    const basePath = '../'.repeat(depth);
+    const script = document.createElement('script');
+    script.src = basePath + 'script.js';
+    document.body.appendChild(script);
+  </script>
 
   <!-- JavaScript -->
-  <script src="script.js"></script>
+  <!--script src="script.js"></script-->
 </body>
 </html>
