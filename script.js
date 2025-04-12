@@ -1,24 +1,24 @@
 (function () {
-  // Dynamically calculate the relative path from current page to root
-  const pathParts = window.location.pathname.split('/');
-  const scriptIndex = pathParts.findIndex(part => part.endsWith('.html'));
-  const depth = scriptIndex === -1 ? 0 : scriptIndex - 1;
+  // Get base path to root depending on page depth
+  const basePath = window.location.pathname
+    .replace(/[^\/]+\.html$/, '')  // remove filename
+    .replace(/\/+$/, '')           // remove trailing slashes
+    .split('/').filter(Boolean).map(() => '..').join('/') || '.';
 
-  const basePath = '../'.repeat(depth);
-
-  function loadHTML(id, fileName) {
-    const path = basePath + fileName;
-    fetch(path)
-      .then(response => {
-        if (!response.ok) throw new Error(`${fileName} not found`);
-        return response.text();
+  function loadHTML(id, file) {
+    const filePath = `${basePath}/${file}`;
+    fetch(filePath)
+      .then(res => {
+        if (!res.ok) throw new Error(`${file} not found`);
+        return res.text();
       })
-      .then(data => {
-        document.getElementById(id).innerHTML = data;
+      .then(html => {
+        document.getElementById(id).innerHTML = html;
       })
-      .catch(error => {
-        console.error(error);
-        document.getElementById(id).innerHTML = `<div style="text-align:center;color:red;">${fileName} not found (404)</div>`;
+      .catch(err => {
+        console.error(err.message);
+        document.getElementById(id).innerHTML =
+          `<div style="color:red;text-align:center;">${file} not found (404)</div>`;
       });
   }
 
