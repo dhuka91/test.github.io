@@ -34,13 +34,8 @@
   <!-- Footer -->
   <div id="footer-placeholder"></div>
 
-   <!-- Dynamically load script.js from root -->
-  <script>
-    const depth = window.location.pathname.split('/').length - 2;
-    const script = document.createElement('script');
-    script.src = '../'.repeat(depth) + 'script.js';
-    document.body.appendChild(script);
-  </script>
+  <!-- Dynamically load script.js from 2 levels up -->
+  <script src="../../script.js"></script>
   <!--script src="rewriter.js"></script-->
 </body>
 </html>
