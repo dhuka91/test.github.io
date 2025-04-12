@@ -1,5 +1,9 @@
 (function () {
-  const depth = window.location.pathname.split('/').length - 2;
+  // Dynamically calculate the relative path from current page to root
+  const pathParts = window.location.pathname.split('/');
+  const scriptIndex = pathParts.findIndex(part => part.endsWith('.html'));
+  const depth = scriptIndex === -1 ? 0 : scriptIndex - 1;
+
   const basePath = '../'.repeat(depth);
 
   function loadHTML(id, fileName) {
