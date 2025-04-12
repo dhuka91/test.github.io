@@ -1,6 +1,5 @@
 (function () {
-  // Detect folder depth
-  const depth = location.pathname.replace(/\/$/, "").split('/').length - 2;
+  const depth = window.location.pathname.split('/').length - 2;
   const basePath = '../'.repeat(depth);
 
   function loadHTML(id, fileName) {
